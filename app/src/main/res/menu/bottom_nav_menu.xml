@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/globalFragment"
+        android:title="Global"
+        android:icon="@drawable/ic_global_24"/>
+
+    <item android:id="@+id/countriesFragment"
+        android:title="Countries"
+        android:icon="@drawable/ic_countries_24"/>
+
+
+    <item android:id="@+id/aboutFragment"
+        android:title="About"
+        android:icon="@drawable/ic_about_24"/>
+
+</menu>

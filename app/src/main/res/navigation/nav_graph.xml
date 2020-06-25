@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/globalFragment">
+
+    <fragment
+        android:id="@+id/globalFragment"
+        android:name="com.example.covidapp.GlobalScreen.GlobalFragment"
+        android:label="Global Coronavirus infromation"
+        tools:layout="@layout/fragment_global" />
+    <fragment
+        android:id="@+id/countriesFragment"
+        android:name="com.example.covidapp.CountriesScreen.CountriesFragment"
+        android:label="Coronavirus by Country"
+        tools:layout="@layout/fragment_countries" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.covidapp.AboutScreen.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+</navigation>
