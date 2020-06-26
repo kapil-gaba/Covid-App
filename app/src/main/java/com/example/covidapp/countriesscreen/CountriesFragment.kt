@@ -1,4 +1,4 @@
-package com.example.covidapp.CountriesScreen
+package com.example.covidapp.countriesscreen
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.covidapp.AboutScreen
+package com.example.covidapp.aboutscreen
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

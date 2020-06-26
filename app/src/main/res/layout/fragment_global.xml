@@ -1,15 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".GlobalScreen.GlobalFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="globalViewModel"
+            type="com.example.covidapp.globalscreen.GlobalViewModel" />
+
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Global Fragment"
-        android:gravity="center"
-        android:textSize="22sp"/>
+        android:fillViewport="true">
 
-</FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:VisibilityControl="@{globalViewModel.apiStatus}">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/coronaVirusCases"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="8dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/left_well"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="8dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/right_well"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="8dp" />
+
+                        <TextView
+                            android:id="@+id/globalText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/globalText"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintLeft_toRightOf="@id/left_well"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/casesCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/coronaviruscases"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            app:layout_constraintLeft_toRightOf="@id/left_well"
+                            app:layout_constraintTop_toBottomOf="@+id/globalText" />
+
+                        <TextView
+                            android:id="@+id/numbers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@{String.valueOf(globalViewModel.globalCases.cases)}"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/left_well"
+                            app:layout_constraintTop_toBottomOf="@+id/casesCategory"
+                            tools:text="Numbers" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/deaths"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/coronaVirusCases">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="8dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/left_well2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="8dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/right_well2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="8dp" />
+
+                        <TextView
+                            android:id="@+id/globalText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/globalText"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintLeft_toRightOf="@id/left_well2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/casesCategory2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/deaths"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            app:layout_constraintLeft_toRightOf="@id/left_well2"
+                            app:layout_constraintTop_toBottomOf="@+id/globalText2" />
+
+                        <TextView
+                            android:id="@+id/numbers2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@{String.valueOf(globalViewModel.globalCases.deaths)}"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/left_well2"
+                            app:layout_constraintTop_toBottomOf="@+id/casesCategory2"
+                            tools:text="Numbers" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/recovered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/deaths">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="8dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/left_well3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="8dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/right_well3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="8dp" />
+
+                        <TextView
+                            android:id="@+id/globalText3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/globalText"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintLeft_toRightOf="@id/left_well3"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/casesCategory3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/recovered"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            app:layout_constraintLeft_toRightOf="@id/left_well3"
+                            app:layout_constraintTop_toBottomOf="@+id/globalText3" />
+
+                        <TextView
+                            android:id="@+id/numbers3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@{String.valueOf(globalViewModel.globalCases.recovered)}"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/left_well3"
+                            app:layout_constraintTop_toBottomOf="@+id/casesCategory3"
+                            tools:text="Numbers" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                app:ApiStatus="@{globalViewModel.apiStatus}" />
+        </FrameLayout>
+
+    </ScrollView>
+
+</layout>

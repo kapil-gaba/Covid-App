@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/globalFragment"
-        android:name="com.example.covidapp.GlobalScreen.GlobalFragment"
+        android:name="com.example.covidapp.globalscreen.GlobalFragment"
         android:label="Global Coronavirus infromation"
         tools:layout="@layout/fragment_global" />
     <fragment
         android:id="@+id/countriesFragment"
-        android:name="com.example.covidapp.CountriesScreen.CountriesFragment"
+        android:name="com.example.covidapp.countriesscreen.CountriesFragment"
         android:label="Coronavirus by Country"
         tools:layout="@layout/fragment_countries" />
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.covidapp.AboutScreen.AboutFragment"
+        android:name="com.example.covidapp.aboutscreen.AboutFragment"
         android:label="About"
         tools:layout="@layout/fragment_about" />
 </navigation>

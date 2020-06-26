@@ -15,8 +15,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var navController: NavController
 
+    lateinit var navController: NavController
+    private var backPressedOnce = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,26 +25,26 @@ class MainActivity : AppCompatActivity() {
         setupViews()
     }
 
-    fun setupViews()
-    {
-        var navHostFragment = supportFragmentManager.findFragmentById(R.id.fragNavHost) as NavHostFragment
+    fun setupViews() {
+        var navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragNavHost) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
 
         //var appBarConfiguration = AppBarConfiguration(navHostFragment.navController.graph)
-        var appBarConfiguration = AppBarConfiguration(setOf(R.id.globalFragment, R.id.countriesFragment, R.id.aboutFragment))
+        var appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.globalFragment,
+                R.id.countriesFragment,
+                R.id.aboutFragment
+            )
+        )
         setupActionBarWithNavController(navHostFragment.navController, appBarConfiguration)
     }
 
-
-
-    private var backPressedOnce = false
-
     override fun onBackPressed() {
-        if (navController.graph.startDestination == navController.currentDestination?.id)
-        {
-            if (backPressedOnce)
-            {
+        if (navController.graph.startDestination == navController.currentDestination?.id) {
+            if (backPressedOnce) {
                 super.onBackPressed()
                 return
             }
@@ -54,8 +55,7 @@ class MainActivity : AppCompatActivity() {
             Handler().postDelayed(2000) {
                 backPressedOnce = false
             }
-        }
-        else {
+        } else {
             super.onBackPressed()
         }
     }
