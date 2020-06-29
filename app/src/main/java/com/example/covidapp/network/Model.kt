@@ -17,3 +17,4 @@ data class CountriesData (
     val active : Int,
     val critical : Int
 )
+

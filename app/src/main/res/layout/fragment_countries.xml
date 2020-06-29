@@ -12,24 +12,49 @@
     </data>
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/countriesDataLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".countriesscreen.CountriesFragment">
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/country_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textCursorDrawable="@null"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="@id/countriesDataLayout"
+            app:layout_constraintStart_toStartOf="@id/countriesDataLayout"
+            app:layout_constraintTop_toTopOf="@id/countriesDataLayout"
+            app:queryBackground="@null" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/countriesDataLayout"
+            app:layout_constraintEnd_toEndOf="@id/countriesDataLayout"
+            app:layout_constraintStart_toStartOf="@id/countriesDataLayout"
+            app:layout_constraintTop_toBottomOf="@id/country_search"
             tools:listitem="@layout/country_item" />
 
         <ImageView
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:ApiStatus="@{viewModel.countriesApiStatus}"
+            app:layout_constraintBottom_toBottomOf="@id/countriesDataLayout"
+            app:layout_constraintEnd_toEndOf="@id/countriesDataLayout"
+            app:layout_constraintStart_toStartOf="@id/countriesDataLayout"
+            app:layout_constraintTop_toTopOf="@id/countriesDataLayout"
             tools:srcCompat="@drawable/loading_animation" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -8,14 +8,19 @@ import com.example.covidapp.ApiStatus
 import com.example.covidapp.network.CountriesData
 import com.example.covidapp.network.countriesDataService
 import com.google.gson.JsonArray
+import io.reactivex.Notification
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function
+import io.reactivex.internal.operators.single.SingleToObservable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class CountriesViewModel : ViewModel() {
@@ -39,12 +44,24 @@ class CountriesViewModel : ViewModel() {
         publishSubject.onNext("")
     }
 
+    fun setUserSearchQuery(query : String){
+        Log.i("CountriesViewModel", query)
+        publishSubject.onNext(query)
+    }
+
     private fun getSearchObserver(): DisposableObserver<List<CountriesData>> {
         return object : DisposableObserver<List<CountriesData>>() {
             override fun onNext(countries: List<CountriesData>) {
-                _countries.value = countries
-                _countriesApiStatus.value = ApiStatus.DONE
-                Log.i("CountriesViewModel", countries[0].country)
+
+                if(countries.isEmpty()){
+                    _countriesApiStatus.value = ApiStatus.ERROR
+                    _countries.value = countries
+                }else {
+                    _countriesApiStatus.value = ApiStatus.DONE
+                    _countries.value = countries
+
+                }
+                Log.i("CountriesViewModel", "observerOnNext")
             }
 
             override fun onError(e: Throwable) {
@@ -59,6 +76,7 @@ class CountriesViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        Log.i("CountriesViewModel", "onClearCalled")
         disposable.clear()
     }
 
@@ -66,7 +84,7 @@ class CountriesViewModel : ViewModel() {
         _countriesApiStatus.value = ApiStatus.LOADING
         disposable.add(
             publishSubject
-                .debounce(300, TimeUnit.MILLISECONDS)
+                .debounce(600, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .switchMapSingle(object :
                     Function<String, Single<List<CountriesData>>> {
@@ -74,12 +92,19 @@ class CountriesViewModel : ViewModel() {
                     override fun apply(t: String): Single<List<CountriesData>> {
 
                         if (t == "") {
-                            return countriesDataService.getCountries()
+                            return countriesDataService.getCountries().doOnError{throwable->
+                                Log.i("CountriesViewModel",throwable.toString() )
+                            }.onErrorReturn { throwable -> ArrayList()  }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                         } else {
+                            Log.i("CountriesViewModel", "queryNetworkCall")
                             return countriesDataService.getCountry(t)
-                                .flatMap { Single.just(listOf(it)) }
+                                .flatMap {
+                                    Single.just(listOf(it))
+                                }.doOnError{throwable->
+                                    Log.i("CountriesViewModel",throwable.toString() )
+                                }.onErrorReturn { throwable -> ArrayList()  }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                         }
