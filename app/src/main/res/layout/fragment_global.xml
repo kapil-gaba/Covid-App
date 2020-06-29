@@ -28,7 +28,7 @@
 
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/coronaVirusCases"
+                    android:id="@+id/casesCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -60,7 +60,7 @@
                             app:layout_constraintGuide_end="8dp" />
 
                         <TextView
-                            android:id="@+id/globalText"
+                            android:id="@+id/countryTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -70,7 +70,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/casesCategory"
+                            android:id="@+id/casesTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -78,10 +78,10 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="18sp"
                             app:layout_constraintLeft_toRightOf="@id/left_well"
-                            app:layout_constraintTop_toBottomOf="@+id/globalText" />
+                            app:layout_constraintTop_toBottomOf="@+id/countryTextView" />
 
                         <TextView
-                            android:id="@+id/numbers"
+                            android:id="@+id/numbersTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -91,14 +91,14 @@
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/left_well"
-                            app:layout_constraintTop_toBottomOf="@+id/casesCategory"
+                            app:layout_constraintTop_toBottomOf="@+id/casesTextView"
                             tools:text="Numbers" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/deaths"
+                    android:id="@+id/deathsCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -107,7 +107,7 @@
                     app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/coronaVirusCases">
+                    app:layout_constraintTop_toBottomOf="@+id/casesCardView">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                             app:layout_constraintGuide_end="8dp" />
 
                         <TextView
-                            android:id="@+id/globalText2"
+                            android:id="@+id/globalTextView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -141,7 +141,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/casesCategory2"
+                            android:id="@+id/globaldeathsTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -149,10 +149,10 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="18sp"
                             app:layout_constraintLeft_toRightOf="@id/left_well2"
-                            app:layout_constraintTop_toBottomOf="@+id/globalText2" />
+                            app:layout_constraintTop_toBottomOf="@+id/globalTextView2" />
 
                         <TextView
-                            android:id="@+id/numbers2"
+                            android:id="@+id/numbersTextView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -162,14 +162,14 @@
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/left_well2"
-                            app:layout_constraintTop_toBottomOf="@+id/casesCategory2"
+                            app:layout_constraintTop_toBottomOf="@+id/globaldeathsTextView"
                             tools:text="Numbers" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/recovered"
+                    android:id="@+id/recoveredCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -178,7 +178,7 @@
                     app:cardElevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/deaths">
+                    app:layout_constraintTop_toBottomOf="@+id/deathsCardView">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                             app:layout_constraintGuide_end="8dp" />
 
                         <TextView
-                            android:id="@+id/globalText3"
+                            android:id="@+id/globalTextView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -212,7 +212,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/casesCategory3"
+                            android:id="@+id/recoveredTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -220,10 +220,10 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="18sp"
                             app:layout_constraintLeft_toRightOf="@id/left_well3"
-                            app:layout_constraintTop_toBottomOf="@+id/globalText3" />
+                            app:layout_constraintTop_toBottomOf="@+id/globalTextView3" />
 
                         <TextView
-                            android:id="@+id/numbers3"
+                            android:id="@+id/numbersTextView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -233,7 +233,7 @@
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/left_well3"
-                            app:layout_constraintTop_toBottomOf="@+id/casesCategory3"
+                            app:layout_constraintTop_toBottomOf="@+id/recoveredTextView"
                             tools:text="Numbers" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

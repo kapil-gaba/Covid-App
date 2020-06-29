@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 
-private const val BASE_URL = "https://coronavirus-19-api.herokuapp.com/"
+private const val BASE_URL = "https://corona.lmao.ninja/v2/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="countriesData"
+            type="com.example.covidapp.network.CountriesData" />
+
+    </data>
+
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/casesCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="5dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="|"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/todaycasesNumber"
+            app:layout_constraintStart_toEndOf="@+id/todaycasesNumber" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_well"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_well"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp" />
+
+        <TextView
+            android:id="@+id/countryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:text="@{countriesData.country}"
+            app:layout_constraintLeft_toRightOf="@id/left_well"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="India" />
+
+        <TextView
+            android:id="@+id/casesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/coronaviruscases"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/countryTextView"
+            app:layout_constraintTop_toBottomOf="@+id/countryTextView" />
+
+        <TextView
+            android:id="@+id/countrynumbersTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/deaths"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/left_well"
+            app:layout_constraintTop_toBottomOf="@+id/casesTextView" />
+
+        <TextView
+            android:id="@+id/recoveredTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/recovered"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/left_well"
+            app:layout_constraintTop_toBottomOf="@+id/countrynumbersTextView" />
+
+        <TextView
+            android:id="@+id/casesNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.cases)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/casesTextView"
+            app:layout_constraintStart_toEndOf="@+id/casesTextView"
+            tools:text="154545455" />
+
+        <TextView
+            android:id="@+id/view1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="|"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/casesNumber"
+            app:layout_constraintStart_toEndOf="@+id/casesNumber" />
+
+        <TextView
+            android:id="@+id/todayCasesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/TodayCases"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/view1"
+            app:layout_constraintStart_toEndOf="@+id/view1" />
+
+        <TextView
+            android:id="@+id/todaycasesNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.todayCases)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/todayCasesTextView"
+            app:layout_constraintStart_toEndOf="@+id/todayCasesTextView"
+            tools:text="114445" />
+
+        <TextView
+            android:id="@+id/activeCasesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/ActiveCases"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/view2"
+            app:layout_constraintStart_toEndOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/activecasesNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.active)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/activeCasesTextView"
+            app:layout_constraintStart_toEndOf="@+id/activeCasesTextView"
+            tools:text="154454" />
+
+        <TextView
+            android:id="@+id/deathsNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.deaths)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/countrynumbersTextView"
+            app:layout_constraintStart_toEndOf="@+id/countrynumbersTextView"
+            tools:text="555556" />
+
+        <TextView
+            android:id="@+id/view3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="|"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/deathsNumber"
+            app:layout_constraintStart_toEndOf="@+id/deathsNumber" />
+
+        <TextView
+            android:id="@+id/todayDeathsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/TodayCases"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/view3"
+            app:layout_constraintStart_toEndOf="@+id/view3" />
+
+        <TextView
+            android:id="@+id/todaydeathsNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.todayDeaths)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/todayDeathsTextView"
+            app:layout_constraintStart_toEndOf="@+id/todayDeathsTextView"
+            tools:text="788" />
+
+        <TextView
+            android:id="@+id/recoveredNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.recovered)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/recoveredTextView"
+            app:layout_constraintStart_toEndOf="@+id/recoveredTextView"
+            tools:text="4485" />
+
+        <TextView
+            android:id="@+id/view4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="|"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/recoveredNumber"
+            app:layout_constraintStart_toEndOf="@+id/recoveredNumber" />
+
+        <TextView
+            android:id="@+id/criticalTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/CriticalText"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/view4"
+            app:layout_constraintStart_toEndOf="@+id/view4" />
+
+        <TextView
+            android:id="@+id/criticalNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(countriesData.critical)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/criticalTextView"
+            app:layout_constraintStart_toEndOf="@+id/criticalTextView"
+            tools:text="45555" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+    </layout>
