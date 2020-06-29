@@ -6,5 +6,5 @@ This app is using power of Android Jetpack Components, Kotlin Coroutines and RxJ
 
 # Screen Shots
 
- <img src="https://github.com/kapil-gaba/Covid-App/blob/master/Screen%20shots/Screen%202.png"/>
+ <img src="https://github.com/kapil-gaba/Covid-App/blob/master/Screen%20shots/Screen1.png"/> | <img src="https://github.com/kapil-gaba/Covid-App/blob/master/Screen%20shots/Screen%202.png"/>
 
