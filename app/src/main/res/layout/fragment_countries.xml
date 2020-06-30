@@ -28,7 +28,8 @@
             app:layout_constraintEnd_toEndOf="@id/countriesDataLayout"
             app:layout_constraintStart_toStartOf="@id/countriesDataLayout"
             app:layout_constraintTop_toTopOf="@id/countriesDataLayout"
-            app:queryBackground="@null" />
+            app:queryBackground="@null"
+            app:queryHint="Search Country" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

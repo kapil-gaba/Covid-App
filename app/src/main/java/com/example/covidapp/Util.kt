@@ -32,7 +32,6 @@ fun getApiStatus(imgView: ImageView, status: ApiStatus?) {
             imgView.visibility = View.GONE
             Log.i("DoneStatus", "ok")
         }
-
     }
 }
 
@@ -40,7 +39,7 @@ fun getApiStatus(imgView: ImageView, status: ApiStatus?) {
 fun controlViewVisibility(constraintLayout: ConstraintLayout, status: ApiStatus?) {
     when (status) {
         ApiStatus.LOADING -> {
-            Log.i("LoadingStatus1", "ok")
+            Log.i("LoadingStatus2", "ok")
             constraintLayout.visibility = View.GONE
 
         }
@@ -51,9 +50,8 @@ fun controlViewVisibility(constraintLayout: ConstraintLayout, status: ApiStatus?
         }
         ApiStatus.DONE -> {
             constraintLayout.visibility = View.VISIBLE
-            Log.i("DoneStatus3", "ok")
+            Log.i("DoneStatus2", "ok")
         }
-
     }
 }
 

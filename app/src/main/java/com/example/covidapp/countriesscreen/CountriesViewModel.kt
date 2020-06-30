@@ -31,20 +31,20 @@ class CountriesViewModel : ViewModel() {
         PublishSubject.create<String>()
     private val observer: DisposableObserver<List<CountriesData>> = getSearchObserver()
     private val _countries = MutableLiveData<List<CountriesData>>()
-            val countries : LiveData<List<CountriesData>>
-                    get() = _countries
+    val countries: LiveData<List<CountriesData>>
+        get() = _countries
+
     // For api status
     private val _countriesApiStatus = MutableLiveData<ApiStatus>()
     val countriesApiStatus: LiveData<ApiStatus>
         get() = _countriesApiStatus
 
     init {
-
         getCountriesList()
         publishSubject.onNext("")
     }
 
-    fun setUserSearchQuery(query : String){
+    fun setUserSearchQuery(query: String) {
         Log.i("CountriesViewModel", query)
         publishSubject.onNext(query)
     }
@@ -53,13 +53,17 @@ class CountriesViewModel : ViewModel() {
         return object : DisposableObserver<List<CountriesData>>() {
             override fun onNext(countries: List<CountriesData>) {
 
-                if(countries.isEmpty()){
+                if (countries.isEmpty()) {
+                    _countries.value = countries
                     _countriesApiStatus.value = ApiStatus.ERROR
-                    _countries.value = countries
-                }else {
-                    _countriesApiStatus.value = ApiStatus.DONE
-                    _countries.value = countries
 
+                } else {
+                    _countriesApiStatus.value = ApiStatus.DONE
+                    if (countries[0].country == "Not Found") {
+                        _countries.value = ArrayList()
+                    } else {
+                        _countries.value = countries
+                    }
                 }
                 Log.i("CountriesViewModel", "observerOnNext")
             }
@@ -92,9 +96,10 @@ class CountriesViewModel : ViewModel() {
                     override fun apply(t: String): Single<List<CountriesData>> {
 
                         if (t == "") {
-                            return countriesDataService.getCountries().doOnError{throwable->
-                                Log.i("CountriesViewModel",throwable.toString() )
-                            }.onErrorReturn { throwable -> ArrayList()  }
+                            return countriesDataService.getCountries().doOnError { throwable ->
+
+                                Log.i("CountriesViewModel", throwable.message)
+                            }.onErrorReturn { throwable -> ArrayList() }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                         } else {
@@ -102,9 +107,21 @@ class CountriesViewModel : ViewModel() {
                             return countriesDataService.getCountry(t)
                                 .flatMap {
                                     Single.just(listOf(it))
-                                }.doOnError{throwable->
-                                    Log.i("CountriesViewModel",throwable.toString() )
-                                }.onErrorReturn { throwable -> ArrayList()  }
+                                }.doOnError { throwable ->
+
+                                }.onErrorReturn { throwable ->
+                                    throwable.message?.let {
+                                        if (it.contains("HTTP 404")) {
+                                            Log.i("CountriesViewModel", throwable.message)
+                                            val countriesData =
+                                                CountriesData("Not Found", 0, 0, 0, 0, 0, 0, 0)
+                                            return@onErrorReturn listOf(countriesData)
+                                        } else {
+                                            Log.i("CountriesViewModel", throwable.message)
+                                            return@onErrorReturn ArrayList()
+                                        }
+                                    }
+                                }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                         }

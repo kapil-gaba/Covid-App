@@ -37,11 +37,10 @@ class CountriesDataAdapter : RecyclerView.Adapter<CountryInfoViewHolder>() {
     override fun getItemCount() = countriesData.size
 
 
-
     override fun onBindViewHolder(holder: CountryInfoViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.countriesData = countriesData[position]
-             Log.i("DataAdapter",countriesData[position].country)
+            Log.i("DataAdapter", countriesData[position].country)
         }
     }
 

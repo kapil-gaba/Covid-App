@@ -49,12 +49,15 @@ class CountriesFragment : Fragment() {
 
         binding.countrySearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.countrySearch.clearFocus()
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null)
-                    viewModel.setUserSearchQuery(newText)
+                newText?.let {
+                    viewModel.setUserSearchQuery(it)
+                }
+
                 return false
             }
 
@@ -69,6 +72,9 @@ class CountriesFragment : Fragment() {
 
         val textView = binding.countrySearch.findViewById<TextView>(R.id.search_src_text)
         textView.setTextColor(Color.WHITE)
+        textView.setHintTextColor(Color.WHITE)
+
+
 
         return binding.root
     }
