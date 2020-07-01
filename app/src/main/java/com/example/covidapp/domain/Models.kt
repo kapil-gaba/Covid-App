@@ -1,9 +1,9 @@
-package com.example.covidapp.network
+package com.example.covidapp.domain
 
 data class GlobalData (
-    val cases : Int,
-    val deaths : Int,
-    val recovered : Int
+    val cases : Long,
+    val deaths : Long,
+    val recovered : Long
 )
 
 data class CountriesData (

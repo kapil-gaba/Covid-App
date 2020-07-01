@@ -1,4 +1,4 @@
-package com.example.covidapp
+package com.example.covidapp.util
 
 import android.util.Log
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.covidapp.R
 
 
 enum class ApiStatus {

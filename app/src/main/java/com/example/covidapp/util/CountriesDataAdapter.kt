@@ -1,4 +1,4 @@
-package com.example.covidapp.countriesscreen
+package com.example.covidapp.util
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidapp.R
 import com.example.covidapp.databinding.CountryItemBinding
-import com.example.covidapp.network.CountriesData
+import com.example.covidapp.domain.CountriesData
 
 // Recyclerview Adapter for attaching data
 class CountriesDataAdapter : RecyclerView.Adapter<CountryInfoViewHolder>() {

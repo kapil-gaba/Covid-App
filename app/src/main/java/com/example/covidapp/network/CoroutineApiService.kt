@@ -1,5 +1,6 @@
 package com.example.covidapp.network
 
+import com.example.covidapp.domain.GlobalData
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -29,7 +30,7 @@ val retrofit = Retrofit.Builder()
  */
 interface GlobalService {
     @GET("all")
-    fun getGlobalData(): Deferred<GlobalData>
+    fun getGlobalData(): Deferred<NetworkGlobalData>
 }
 
 object GlobalDataApi {

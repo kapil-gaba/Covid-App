@@ -1,24 +1,19 @@
-package com.example.covidapp.countriesscreen
+package com.example.covidapp.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.covidapp.ApiStatus
-import com.example.covidapp.network.CountriesData
+import com.example.covidapp.domain.CountriesData
 import com.example.covidapp.network.countriesDataService
-import com.google.gson.JsonArray
-import io.reactivex.Notification
-import io.reactivex.Observable
+import com.example.covidapp.util.ApiStatus
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function
-import io.reactivex.internal.operators.single.SingleToObservable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -114,7 +109,16 @@ class CountriesViewModel : ViewModel() {
                                         if (it.contains("HTTP 404")) {
                                             Log.i("CountriesViewModel", throwable.message)
                                             val countriesData =
-                                                CountriesData("Not Found", 0, 0, 0, 0, 0, 0, 0)
+                                                CountriesData(
+                                                    "Not Found",
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0
+                                                )
                                             return@onErrorReturn listOf(countriesData)
                                         } else {
                                             Log.i("CountriesViewModel", throwable.message)

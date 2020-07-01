@@ -7,7 +7,7 @@
 
         <variable
             name="globalViewModel"
-            type="com.example.covidapp.globalscreen.GlobalViewModel" />
+            type="com.example.covidapp.viewmodels.GlobalViewModel" />
 
     </data>
 

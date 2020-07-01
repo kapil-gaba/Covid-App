@@ -1,10 +1,8 @@
-package com.example.covidapp.countriesscreen
+package com.example.covidapp.ui
 
 import android.graphics.Color
-import android.media.Image
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +14,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covidapp.R
+import com.example.covidapp.util.CountriesDataAdapter
+import com.example.covidapp.viewmodels.CountriesViewModel
 import com.example.covidapp.databinding.FragmentCountriesBinding
 
 class CountriesFragment : Fragment() {
@@ -40,7 +40,8 @@ class CountriesFragment : Fragment() {
             it.viewModel = viewModel
         }
 
-        countriesDataAdapter = CountriesDataAdapter()
+        countriesDataAdapter =
+            CountriesDataAdapter()
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
