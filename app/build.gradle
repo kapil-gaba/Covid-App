@@ -88,7 +88,7 @@ dependencies {
     def version_room = "2.0.0"
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
-
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
     implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 
     implementation 'com.android.support:multidex:1.0.3'

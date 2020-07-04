@@ -17,12 +17,15 @@ import com.example.covidapp.R
 import com.example.covidapp.util.CountriesDataAdapter
 import com.example.covidapp.viewmodels.CountriesViewModel
 import com.example.covidapp.databinding.FragmentCountriesBinding
+import com.example.covidapp.util.createFactory
 
 class CountriesFragment : Fragment() {
 
 
     private val viewModel: CountriesViewModel by lazy {
-        ViewModelProviders.of(this).get(CountriesViewModel::class.java)
+        val application = requireNotNull(activity).application
+        val viewModelFactory = CountriesViewModel(application).createFactory()
+        ViewModelProviders.of(this,viewModelFactory).get(CountriesViewModel::class.java)
     }
     private var countriesDataAdapter: CountriesDataAdapter? = null
 

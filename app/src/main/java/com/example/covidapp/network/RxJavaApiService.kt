@@ -1,6 +1,5 @@
 package com.example.covidapp.network
 
-import com.example.covidapp.domain.CountriesData
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -60,8 +59,8 @@ object ApiClient {
 
 interface CountriesService {
     @GET("countries/{query}")
-    fun getCountry(@Path("query") query: String): Single<CountriesData>
+    fun getCountry(@Path("query") query: String): Single<NetworkCountriesData>
 
     @GET("countries")
-    fun getCountries(): Single<List<CountriesData>>
+    fun getCountries(): Single<List<NetworkCountriesData>>
 }

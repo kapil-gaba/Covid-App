@@ -9,4 +9,7 @@
     <string name="TodayCases">Today:</string>
     <string name="ActiveCases">Active:</string>
     <string name="CriticalText">Critical:</string>
+    <string name="globalCoronaCases">Cases</string>
+    <string name="globalCoronaDeaths">Deaths</string>
+    <string name="globalCoronaRecovery">Recovered</string>
 </resources>

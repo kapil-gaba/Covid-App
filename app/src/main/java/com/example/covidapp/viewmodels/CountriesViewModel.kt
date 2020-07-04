@@ -1,16 +1,21 @@
 package com.example.covidapp.viewmodels
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.covidapp.database.asDatabaseModelCountry
+import com.example.covidapp.database.getCoronaDataBase
 import com.example.covidapp.domain.CountriesData
+import com.example.covidapp.network.NetworkCountriesData
 import com.example.covidapp.network.countriesDataService
+import com.example.covidapp.network.convertToCountriesDataFromNetwork
+import com.example.covidapp.repository.CoronaCasesRepository
 import com.example.covidapp.util.ApiStatus
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Function
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -18,16 +23,20 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
-class CountriesViewModel : ViewModel() {
+class CountriesViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val disposable = CompositeDisposable()
+    private val coronaDatabase = getCoronaDataBase(application)
+    private val coronaRepository = CoronaCasesRepository(coronaDatabase)
+    private var disposable = CompositeDisposable()
     private val publishSubject =
         PublishSubject.create<String>()
-    private val observer: DisposableObserver<List<CountriesData>> = getSearchObserver()
+    private val dataObserver: DisposableObserver<List<NetworkCountriesData>> = getDataObserver()
+    private val searchObserver: DisposableObserver<List<NetworkCountriesData>> = getSearchObserver()
     private val _countries = MutableLiveData<List<CountriesData>>()
     val countries: LiveData<List<CountriesData>>
         get() = _countries
+    private var databaseNotContainData = true
 
     // For api status
     private val _countriesApiStatus = MutableLiveData<ApiStatus>()
@@ -36,35 +45,51 @@ class CountriesViewModel : ViewModel() {
 
     init {
         getCountriesList()
-        publishSubject.onNext("")
     }
+
+    private fun singleObservable() = countriesDataService.getCountries()
+        .toObservable()
+        .doOnError { throwable ->
+            Log.i("CountriesViewModel", throwable.message)
+        }.onErrorReturn { throwable ->
+            ArrayList()
+        }
+        .map { countryDataList ->
+            if (countryDataList.isNotEmpty()) {
+                coronaRepository.refreshCountryData(countryDataList)
+            }
+            Log.i("CountriesViewModel", "map")
+            return@map countryDataList
+        }.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     fun setUserSearchQuery(query: String) {
         Log.i("CountriesViewModel", query)
         publishSubject.onNext(query)
     }
 
-    private fun getSearchObserver(): DisposableObserver<List<CountriesData>> {
-        return object : DisposableObserver<List<CountriesData>>() {
-            override fun onNext(countries: List<CountriesData>) {
+    private fun getDataObserver(): DisposableObserver<List<NetworkCountriesData>> {
+        return object : DisposableObserver<List<NetworkCountriesData>>() {
 
-                if (countries.isEmpty()) {
-                    _countries.value = countries
-                    _countriesApiStatus.value = ApiStatus.ERROR
+            override fun onNext(countriesList: List<NetworkCountriesData>) {
+
+                if (countriesList.isEmpty()) {
+
+                    if (databaseNotContainData) {
+                        _countriesApiStatus.value = ApiStatus.ERROR
+                        Log.i("CountriesViewModel", "error")
+                    }
+
 
                 } else {
+                    Log.i("CountriesViewModel", "not empty")
                     _countriesApiStatus.value = ApiStatus.DONE
-                    if (countries[0].country == "Not Found") {
-                        _countries.value = ArrayList()
-                    } else {
-                        _countries.value = countries
-                    }
+                    _countries.value = countriesList.convertToCountriesDataFromNetwork()
                 }
-                Log.i("CountriesViewModel", "observerOnNext")
             }
 
             override fun onError(e: Throwable) {
-                _countries.value = ArrayList()
+                //_countries.value = ArrayList()
                 _countriesApiStatus.value = ApiStatus.ERROR
                 Log.e("CountriesViewModel", "onError: " + e.message)
             }
@@ -73,70 +98,77 @@ class CountriesViewModel : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("CountriesViewModel", "onClearCalled")
-        disposable.clear()
+    private fun getSearchObserver(): DisposableObserver<List<NetworkCountriesData>> {
+        return object : DisposableObserver<List<NetworkCountriesData>>() {
+
+            override fun onNext(countriesList: List<NetworkCountriesData>) {
+
+                if (countriesList.isEmpty()) {
+                    _countries.value = ArrayList()
+                    Log.i("ViewModel Search", "Not found")
+                } else {
+                    Log.i("ViewModel Search", "Found")
+                    _countries.value = countriesList.convertToCountriesDataFromNetwork()
+                }
+            }
+
+            override fun onError(e: Throwable) {
+                _countriesApiStatus.value = ApiStatus.ERROR
+                Log.e("ViewModel Search", "onError: " + e.message)
+            }
+
+            override fun onComplete() {}
+        }
     }
 
     private fun getCountriesList() {
+
         _countriesApiStatus.value = ApiStatus.LOADING
+
+        //check if database have data already
+        disposable.add(coronaRepository.globalCasesFromDataBase()
+            .subscribeWith(object : DisposableObserver<List<NetworkCountriesData>>() {
+                override fun onComplete() {
+                }
+                override fun onNext(t: List<NetworkCountriesData>) {
+                    if (t.isNotEmpty()) {
+                        databaseNotContainData = false
+                        Log.i("CountriesViewModel", "Not Empty")
+                    } else {
+                        Log.i("CountriesViewModel", "Empty")
+                    }
+                }
+                override fun onError(e: Throwable) {
+                }
+            })
+        )
+        //save to database from network and then fetch back to UI
+        disposable.add(
+            Observable.concat(
+                singleObservable()
+                , coronaRepository.globalCasesFromDataBase()
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(dataObserver)
+        )
+
         disposable.add(
             publishSubject
                 .debounce(600, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
-                .switchMapSingle(object :
-                    Function<String, Single<List<CountriesData>>> {
-                    @Throws(Exception::class)
-                    override fun apply(t: String): Single<List<CountriesData>> {
-
-                        if (t == "") {
-                            return countriesDataService.getCountries().doOnError { throwable ->
-
-                                Log.i("CountriesViewModel", throwable.message)
-                            }.onErrorReturn { throwable -> ArrayList() }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                        } else {
-                            Log.i("CountriesViewModel", "queryNetworkCall")
-                            return countriesDataService.getCountry(t)
-                                .flatMap {
-                                    Single.just(listOf(it))
-                                }.doOnError { throwable ->
-
-                                }.onErrorReturn { throwable ->
-                                    throwable.message?.let {
-                                        if (it.contains("HTTP 404")) {
-                                            Log.i("CountriesViewModel", throwable.message)
-                                            val countriesData =
-                                                CountriesData(
-                                                    "Not Found",
-                                                    0,
-                                                    0,
-                                                    0,
-                                                    0,
-                                                    0,
-                                                    0,
-                                                    0
-                                                )
-                                            return@onErrorReturn listOf(countriesData)
-                                        } else {
-                                            Log.i("CountriesViewModel", throwable.message)
-                                            return@onErrorReturn ArrayList()
-                                        }
-                                    }
-                                }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                        }
-                    }
-                })
-                .subscribeWith(observer)
+                .switchMapSingle { t -> coronaRepository.countryCasesDataBase(t) }
+                .subscribeWith(searchObserver)
         )
+        disposable.add(searchObserver)
+        disposable.add(dataObserver)
 
+    }
 
-        disposable.add(observer)
-
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("CountriesViewModel", "onClearCalled")
+        disposable.clear()
     }
 
 }
