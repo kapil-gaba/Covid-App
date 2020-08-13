@@ -1,5 +1,6 @@
 package com.example.covidapp.ui
 
+import android.app.Application
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.telephony.gsm.GsmCellLocation
@@ -8,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.covidapp.CovidApplication
 import com.example.covidapp.R
+import com.example.covidapp.ServiceLocator
 import com.example.covidapp.databinding.FragmentGlobalBinding
+import com.example.covidapp.repository.CoronaCasesRepository
 import com.example.covidapp.util.createFactory
 import com.example.covidapp.viewmodels.GlobalViewModel
 
@@ -18,7 +22,7 @@ class GlobalFragment : Fragment() {
 
     private val viewModel: GlobalViewModel by lazy {
          val application = requireNotNull(activity).application
-        val viewModelFactory = GlobalViewModel(application).createFactory()
+        val viewModelFactory = GlobalViewModel(ServiceLocator.provideCoronaRepository(application)).createFactory()
         ViewModelProviders.of(this,viewModelFactory)
             .get(GlobalViewModel::class.java)
     }

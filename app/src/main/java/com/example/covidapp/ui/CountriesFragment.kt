@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covidapp.R
+import com.example.covidapp.ServiceLocator
 import com.example.covidapp.util.CountriesDataAdapter
 import com.example.covidapp.viewmodels.CountriesViewModel
 import com.example.covidapp.databinding.FragmentCountriesBinding
@@ -24,7 +25,7 @@ class CountriesFragment : Fragment() {
 
     private val viewModel: CountriesViewModel by lazy {
         val application = requireNotNull(activity).application
-        val viewModelFactory = CountriesViewModel(application).createFactory()
+        val viewModelFactory = CountriesViewModel(ServiceLocator.provideCoronaRepository(application)).createFactory()
         ViewModelProviders.of(this,viewModelFactory).get(CountriesViewModel::class.java)
     }
     private var countriesDataAdapter: CountriesDataAdapter? = null

@@ -91,11 +91,30 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 
+    //Multidex
     implementation 'com.android.support:multidex:1.0.3'
 
+
     //Testing
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+
+    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    implementation "androidx.test:core:$androidXTestCoreVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+
+
+
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
 }

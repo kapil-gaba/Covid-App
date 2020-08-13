@@ -58,8 +58,8 @@ object ApiClient {
 }
 
 interface CountriesService {
-    @GET("countries/{query}")
-    fun getCountry(@Path("query") query: String): Single<NetworkCountriesData>
+//    @GET("countries/{query}")
+//    fun getCountry(@Path("query") query: String): Single<NetworkCountriesData>
 
     @GET("countries")
     fun getCountries(): Single<List<NetworkCountriesData>>

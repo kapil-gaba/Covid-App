@@ -19,13 +19,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 // repository to fetch data from network and store on local database
-class CoronaCasesRepository(private val database : CoronaDataBase){
+class CoronaCasesRepository(private val database : CoronaDataBase) : CoronaRepository {
 
-    val globalCasesDataBase : LiveData<GlobalData> = Transformations.map(database.dataDao.getGlobalData()){
+    override val globalCasesDataBase : LiveData<GlobalData> = Transformations.map(database.dataDao.getGlobalData()){
         it?.asDomainModelGlobal()
     }
 
-    fun globalCasesFromDataBase() : Observable<List<NetworkCountriesData>> =
+    override fun globalCasesFromDataBase() : Observable<List<NetworkCountriesData>> =
         database.dataDao.getCountryData().map {
                 it.asDatabaseModelCountry()
             }.toObservable().doOnError { throwable ->
@@ -35,7 +35,7 @@ class CoronaCasesRepository(private val database : CoronaDataBase){
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 
-    fun countryCasesDataBase(country : String) : Single<List<NetworkCountriesData>> =
+    override fun countryCasesDataBase(country : String) : Single<List<NetworkCountriesData>> =
 
         if(country == ""){
             database.dataDao.getCountryData().map {
@@ -59,7 +59,7 @@ class CoronaCasesRepository(private val database : CoronaDataBase){
 
         }
 
-    suspend fun refreshGlobalData(){
+    override suspend fun refreshGlobalData(){
         withContext(Dispatchers.IO){
             val globalCasesNetwork = GlobalDataApi.globalDataService.getGlobalData().await()
 
@@ -68,7 +68,15 @@ class CoronaCasesRepository(private val database : CoronaDataBase){
         }
     }
 
-    fun refreshCountryData(countryCasesNetwork : List<NetworkCountriesData>){
+    override suspend fun clearAllData() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addGlobalData(vararg globalData: GlobalData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun refreshCountryData(countryCasesNetwork : List<NetworkCountriesData>){
          database.dataDao.insertAllCountryData(*countryCasesNetwork.asDatabaseModelCountry())
     }
 

@@ -5,13 +5,13 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.covidapp.database.asDatabaseModelCountry
-import com.example.covidapp.database.getCoronaDataBase
+import androidx.lifecycle.ViewModel
 import com.example.covidapp.domain.CountriesData
 import com.example.covidapp.network.NetworkCountriesData
 import com.example.covidapp.network.countriesDataService
 import com.example.covidapp.network.convertToCountriesDataFromNetwork
 import com.example.covidapp.repository.CoronaCasesRepository
+import com.example.covidapp.repository.CoronaRepository
 import com.example.covidapp.util.ApiStatus
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,11 +23,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
-class CountriesViewModel(application: Application) : AndroidViewModel(application) {
+class CountriesViewModel(private val coronaRepository : CoronaRepository) : ViewModel() {
 
 
-    private val coronaDatabase = getCoronaDataBase(application)
-    private val coronaRepository = CoronaCasesRepository(coronaDatabase)
     private var disposable = CompositeDisposable()
     private val publishSubject =
         PublishSubject.create<String>()

@@ -3,6 +3,8 @@ package com.example.covidapp.database
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.covidapp.domain.CountriesData
+import com.example.covidapp.domain.DataCountryInfo
 import com.example.covidapp.domain.GlobalData
 import com.example.covidapp.network.NetworkCountryInfo
 import com.example.covidapp.network.NetworkCountriesData
@@ -60,3 +62,5 @@ fun List<DatabaseCountryData>.asDatabaseModelCountry() : List<NetworkCountriesDa
         )
     }
 }
+
+

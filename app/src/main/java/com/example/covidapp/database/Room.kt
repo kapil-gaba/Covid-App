@@ -32,17 +32,20 @@ abstract class CoronaDataBase : RoomDatabase() {
     abstract val dataDao: DataDao
 }
 
-private lateinit var INSTANCE: CoronaDataBase
+//private lateinit var INSTANCE: CoronaDataBase
+//
+//fun getCoronaDataBase(context: Context): CoronaDataBase {
+//    synchronized(CoronaDataBase::class.java) {
+//        if (!::INSTANCE.isInitialized) {
+//            INSTANCE = Room.databaseBuilder(
+//                context.applicationContext,
+//                CoronaDataBase::class.java, "CoronaCases"
+//            ).build()
+//        }
+//    }
+//    return INSTANCE
+//
+//}
 
-fun getCoronaDataBase(context: Context): CoronaDataBase {
-    synchronized(CoronaDataBase::class.java) {
-        if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room.databaseBuilder(
-                context.applicationContext,
-                CoronaDataBase::class.java, "CoronaCases"
-            ).build()
-        }
-    }
-    return INSTANCE
 
-}
+
