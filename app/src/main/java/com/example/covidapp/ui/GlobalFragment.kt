@@ -23,8 +23,7 @@ class GlobalFragment : Fragment() {
     private val viewModel: GlobalViewModel by lazy {
          val application = requireNotNull(activity).application
         val viewModelFactory = GlobalViewModel(ServiceLocator.provideCoronaRepository(application)).createFactory()
-        ViewModelProviders.of(this,viewModelFactory)
-            .get(GlobalViewModel::class.java)
+        ViewModelProviders.of(this,viewModelFactory).get(GlobalViewModel::class.java)
     }
 
     override fun onCreateView(

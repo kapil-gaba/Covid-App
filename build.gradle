@@ -29,12 +29,12 @@ task clean(type: Delete) {
 }
 
 ext {
-    archTestingVersion = '2.0.0'
+    archTestingVersion = '2.1.0'
     androidXTestCoreVersion = '1.2.0'
     androidXTestExtKotlinRunnerVersion = '1.1.1'
     coroutinesVersion = '1.2.1'
-    fragmentVersion = '1.1.0-alpha07'
-    fragmentKtxVersion = '1.1.0-rc01'
+    fragmentVersion = '1.2.5'
+    fragmentKtxVersion = '1.1.0-rc03'
     hamcrestVersion = '1.3'
     robolectricVersion = '4.3.1'
 }

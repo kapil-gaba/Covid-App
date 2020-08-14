@@ -2,6 +2,9 @@ package com.example.covidapp.ui
 
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.covidapp.R
@@ -44,6 +47,8 @@ class GlobalFragmentTest{
         repository.addGlobalData(globalData)
 
         launchFragmentInContainer<GlobalFragment>(null, R.style.AppTheme)
+        onView(withId(R.id.numbersTextView)).check(matches(isDisplayed()))
+        onView(withId(R.id.numbersTextView)).check(matches(withText("1254896")))
         Thread.sleep(6000)
     }
 }
